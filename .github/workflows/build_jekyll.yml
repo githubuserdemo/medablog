@@ -11,6 +11,7 @@ jobs:
         with:
           ref: master
           fetch-depth: 0
+      - run: git --version
 
       - name: Bundle Install
         run: bundle install
