@@ -8,6 +8,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          ref: master
+          depth: 0
 
       - name: Bundle Install
         run: bundle install
@@ -25,9 +28,11 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git add .
           git commit -m "jekyll build from Action $GITHUB_SHA"
-          git push --set-upstream master:gh-pages master
-       #   git push -f https://${{ secrets.PAT }}@github.com/$GITHUB_REPOSITORY.git master:gh-pages
-       #   git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git master:gh-pages
+          git checkout gh-pages
+          git merge master
+          git push -f origin gh-pages
+        # git push -f https://${{ secrets.PAT }}@github.com/$GITHUB_REPOSITORY.git master:gh-pages
+        # git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git master:gh-pages
       
 
 on:
