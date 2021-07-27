@@ -23,13 +23,17 @@ jobs:
       - name: Deploy
         run: | # TODO: Make target branch configureable
           cd build
+          git init
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git add .
           git commit -m "jekyll build from Action $GITHUB_SHA"
-          git checkout gh-pages
-          git merge master
+          git checkout -b gh-pages
+          git remote add origin https://github.com/$GITHUB_REPOSITORY.git
           git push -f origin gh-pages
+          
+        #  git merge master
+        #  git push -f origin gh-pages
         # git push -f https://${{ secrets.PAT }}@github.com/$GITHUB_REPOSITORY.git master:gh-pages
         # git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git master:gh-pages
       
